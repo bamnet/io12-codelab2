@@ -19,7 +19,7 @@ function parseMapRoot(data) {
 
   //Loop through all the layers of the map, and create MapDataLayers for each one
   $.each(data.layers, function(index, layer) {
-    $("#layer_picker").append('<li><input type="checkbox" id="' + index + '" class="layer"/><label for="' + index + '">' + layer,layerName.replace("Frederick County Virginia", "").replace("County Mosaic", "") + '</label></li>');
+    $("#layer_picker").append('<li><input type="checkbox" id="' + index + '" class="layer"/><label for="' + index + '">' + layer.layerName.replace("Frederick County Virginia", "").replace("County Mosaic", "") + '</label></li>');
     // Create the MapDataLayer, and add it to an array (Step 4)
   });
 
