@@ -1,3 +1,6 @@
+// Global to hold all the layers that can be shown on the map.
+var gmeLayers = [];
+
 // Get MapRoot JSON from Maps Engine Directory
 function loadJSONP() {
   // URL of External Script (Step 1)
@@ -15,8 +18,8 @@ function parseMapRoot(data) {
   setMapBounds(data.bounds);
 
   //Loop through all the layers of the map, and create MapDataLayers for each one
-  $.each(data.layers, function(index) {
-    $("#layer_picker").append('<li><input type="checkbox" id="' + index + '" class="layer"/><label for="' + index + '">' + data.layers[index].layerName.replace("Frederick County Virginia", "").replace("County Mosaic", "") + '</label></li>');
+  $.each(data.layers, function(index, layer) {
+    $("#layer_picker").append('<li><input type="checkbox" id="' + index + '" class="layer"/><label for="' + index + '">' + layer.layerName.replace("Frederick County Virginia", "").replace("County Mosaic", "") + '</label></li>');
     // Create the MapDataLayer, and add it to an array (Step 4)
   });
 
@@ -24,9 +27,9 @@ function parseMapRoot(data) {
   $('.layer').change(function() {
     var layerID = parseInt($(this).attr('id'));
     if ($(this).attr('checked')){
-      gebLayers[layerID].setMap(map);
+      gmeLayers[layerID].setMap(map);
     } else {
-      gebLayers[layerID].setMap(null);
+      gmeLayers[layerID].setMap(null);
     }
   });
 }
