@@ -3,11 +3,13 @@ var gmeLayers = [];
 
 // Get MapRoot JSON from Maps Engine Directory
 function loadJSONP() {
-  // URL of External Script (Step 1)
+  var directory_base = 'https://mapsenginedirectory.appspot.com/maproot/?acl=public&format=jsonp';
+  var map_id = '04996796288385000359-08363259842776504974-4';
 
-  // Create Insertable Script (Step 2)
-
-  // Load the script (Step 3)
+  var url = directory_base + '&map=' + map_id + '&callback=?';
+  $.getJSON(url, function(data){
+    parseMapRoot(data);
+  });
 }
 
 
@@ -21,6 +23,12 @@ function parseMapRoot(data) {
   $.each(data.layers, function(index, layer) {
     $("#layer_picker").append('<li><input type="checkbox" id="' + index + '" class="layer"/><label for="' + index + '">' + layer.layerName.replace("Frederick County Virginia", "").replace("County Mosaic", "") + '</label></li>');
     // Create the MapDataLayer, and add it to an array (Step 4)
+    var gmeLayer = new google.maps.visualization.MapDataLayer({
+      mapId: data.assetId,
+      layerId: layer.key,
+      suppressInfoWindows: false,
+    });
+    gmeLayers[index] = gmeLayer;
   });
 
   //Add a JQuery listener to each layer's checkbox, so when it ticked it will toggle the layer's visiblility.
